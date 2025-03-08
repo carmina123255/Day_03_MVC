@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.IKEA.DAL.Common.Entities
 {
-    class BaseAuditableEntity<TKey>:BaseEntity<TKey> where TKey :IEquatable<TKey>
+    public class BaseAuditableEntity<TKey>:BaseEntity<TKey> where TKey :IEquatable<TKey>
     {
         public required string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }

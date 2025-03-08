@@ -9,9 +9,12 @@ using System.Threading.Tasks;
 
 namespace LinkDev.IKEA.DAL.Persistance.Data
 {
-    class ApplicationDbContext:DbContext
+    public class ApplicationDbContext:DbContext
     {
-        public ApplicationDbContext() { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
+        {
+        
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
