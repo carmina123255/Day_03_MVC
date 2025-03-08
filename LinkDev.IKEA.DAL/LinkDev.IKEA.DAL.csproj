@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Entities\" />
-    <Folder Include="Common\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Persistance\Data\Migrations\" />
     <Folder Include="Persistance\Data\Configurations\" />
