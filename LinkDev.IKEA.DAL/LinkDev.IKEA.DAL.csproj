@@ -10,7 +10,6 @@
     <Folder Include="Entities\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Persistance\Data\Migrations\" />
-    <Folder Include="Persistance\Data\Configurations\" />
     <Folder Include="Persistance\Data\DbInitializer\" />
     <Folder Include="Persistance\Data\Seeds\" />
     <Folder Include="Persistance\UnitOfWork\" />
