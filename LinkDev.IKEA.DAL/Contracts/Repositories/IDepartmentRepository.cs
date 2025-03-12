@@ -12,8 +12,8 @@ namespace LinkDev.IKEA.DAL.Contacts.Repositories
         IEnumerable<Department> GetAll(bool WithTracking = false);
 
         Department? Get(int id);
-        int Add(Department Entity);
-        int Update(Department Entity);
-        int Delete(int id);
+        void Add(Department Entity);
+        void Update(Department Entity);
+        void  Delete(int id);
     }
 }
