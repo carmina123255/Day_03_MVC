@@ -11,7 +11,6 @@
     <Folder Include="Persistance\Data\Migrations\" />
     <Folder Include="Persistance\Data\Seeds\" />
     <Folder Include="Persistance\UnitOfWork\" />
-    <Folder Include="Persistance\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
