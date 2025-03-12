@@ -9,6 +9,6 @@ namespace LinkDev.IKEA.BLL.Models.Department
 {
     #region Auditable 
     #endregion
-    record DepartmentDetailsDto(int Id, string Name, string Code, string? Description, DateOnly CreationDate, string CreatedBy, DateTime CreatedOn, string LastModifiedBy, DateTime LastModifiedOn)
+   public record DepartmentDetailsDto(int Id, string Name, string Code, string? Description, DateOnly CreationDate, string CreatedBy, DateTime CreatedOn, string LastModifiedBy, DateTime LastModifiedOn)
         ;
 }

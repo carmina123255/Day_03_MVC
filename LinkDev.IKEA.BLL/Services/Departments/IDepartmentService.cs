@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace LinkDev.IKEA.BLL.Services.Departments
 {
-    interface IDepartmentService
+    public interface IDepartmentService
     {
-        IEnumerable<DepartmentDto> GetDepartment();
-        DepartmentDetailsDto GetDepartmentById(int id);
-        int CreateDepartment(CreateDepartmentDto department);
-        int UpdateDepartment(UpdateDepartmentDto department);
-        bool RemoveDepartment(int id);
+      IEnumerable<DepartmentDto> GetDepartment();
+      DepartmentDetailsDto GetDepartmentById(int id);
+      int CreateDepartment(CreateDepartmentDto department);
+      int UpdateDepartment(UpdateDepartmentDto department);
+      bool RemoveDepartment(int id);
     }
 
 

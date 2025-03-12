@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.IKEA.BLL.Services.Departments
 {
-    class DepartmentService : IDepartmentService
+    public class DepartmentService : IDepartmentService
     {
         private readonly IUnitOfWork _UnitOfWork;
         public DepartmentService(IUnitOfWork unitOfWork)
