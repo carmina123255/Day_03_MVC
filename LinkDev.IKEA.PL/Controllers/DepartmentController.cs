@@ -1,7 +1,9 @@
-﻿using LinkDev.IKEA.BLL.Services.Departments;
+﻿using LinkDev.IKEA.BLL.Models.Department;
+using LinkDev.IKEA.BLL.Services.Departments;
 using LinkDev.IKEA.DAL.Common.Entities.Departments;
 using LinkDev.IKEA.PL.Models.Department;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Microsoft.Identity.Client;
 
 namespace LinkDev.IKEA.PL.Controllers
@@ -13,9 +15,11 @@ namespace LinkDev.IKEA.PL.Controllers
         /// public IDepartmentService departmentService { get; set; }
         /// 
         private readonly IDepartmentService _departmentService;
+        private readonly ILogger<DepartmentController> logger;
 
-        public DepartmentController(IDepartmentService departmentServic)
+        public DepartmentController(ILogger<DepartmentController>Logger,IDepartmentService departmentServic)
         {
+            logger = Logger;
             _departmentService = departmentServic;
         }
         #endregion
@@ -68,6 +72,38 @@ namespace LinkDev.IKEA.PL.Controllers
 
         }
 
+        #endregion
+
+        #region Create
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost] //Post:/Department/Create
+        public IActionResult Create(CreateDepartmentViewModel model)
+        {
+            var message = "Department Created Successfuly";
+            try
+            {
+                if (!ModelState.IsValid)
+                    return View(model);
+                var departmentToCreate = new CreateDepartmentDto(model.Code, model.Name, model.Description, model.CreationDate);
+                var Created = _departmentService.CreateDepartment(departmentToCreate) > 0;
+                if (!Created)
+                    message = "Failed To Create Department";
+
+            }
+            catch(Exception ex)
+            {//1-Log Exception in Database or External File
+                logger.LogError(ex.Message, ex.StackTrace!.ToString());
+                //2-Set Message 
+                message = "An error Occurred,Please Try Later";
+            }
+            TempData["Message"] = message;//Appear message in next Action
+            return RedirectToAction(nameof(Index));//next Action 
+        }
         #endregion
     }
 }
