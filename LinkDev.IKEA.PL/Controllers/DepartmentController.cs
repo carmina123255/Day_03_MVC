@@ -105,5 +105,59 @@ namespace LinkDev.IKEA.PL.Controllers
             return RedirectToAction(nameof(Index));//next Action 
         }
         #endregion
+
+        #region Edit 
+        [HttpGet] //GEt:Department/Edit/Id?
+        public IActionResult Edit(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+            var department = _departmentService.GetDepartmentById(id.Value);
+
+            if (department is null)
+                return NotFound();
+            var departmentToView = new UpdateDepartmentViewModel()
+            {
+                Id = department.Id,
+                Code = department.Code,
+                Name = department.Name,
+                Description = department.Description??"",
+                CreationDate = department.CreationDate,
+
+            };
+            TempData["Id"] = id;
+            return View(departmentToView);
+        }
+        [HttpPost]//Post:Department/Edit/id
+        public IActionResult Edit([FromRoute]int id ,UpdateDepartmentViewModel model)
+        {
+            if (((int?)TempData["Id"]) != id)
+            {
+                ModelState.AddModelError("Id", "Invalid Id");
+                return View(model);
+            }
+            if (!ModelState.IsValid)
+                return View(model);
+            var message = "Department Updated Successfuly";
+            try
+            {
+               
+                var departmentToUpdate = new UpdateDepartmentDto(id,model.Code, model.Name, model.Description, model.CreationDate);
+                var updated = _departmentService.UpdateDepartment(departmentToUpdate) > 0;
+                if (!updated)
+                    message = "Failed To Update Department";
+
+            }
+            catch (Exception ex)
+            {//1-Log Exception in Database or External File
+                logger.LogError(ex.Message, ex.StackTrace!.ToString());
+                //2-Set Message 
+                message = "An error Occurred,Please Try Later";
+            }
+            TempData["Message"] = message;//Appear message in next Action
+            return RedirectToAction(nameof(Index));//next Action 
+        }
+
+        #endregion
     }
 }
