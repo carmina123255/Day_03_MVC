@@ -1,3 +1,4 @@
+using LinkDev.IKEA.BLL;
 using LinkDev.IKEA.DAL;
 using LinkDev.IKEA.DAL.Persistance.Data;
 using LinkDev.IKEA.PL.Extenstions;
@@ -18,6 +19,7 @@ namespace LinkDev.IKEA.PL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+           
             #region OR
             /// builder.Services.AddDbContext<ApplicationDbContext>(
             ///     optionsAction: (OptionBuilder) =>
@@ -30,6 +32,7 @@ namespace LinkDev.IKEA.PL
             ///     
 
             builder.Services.AddPresistanceServices(builder.Configuration);
+            builder.Services.AddApplicationService();
             #endregion
             /// builder.Services.AddScoped<DbContextOptions<ApplicationDbContext>>();
             /// builder.Services.AddScoped<ApplicationDbContext>();

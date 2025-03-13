@@ -13,12 +13,12 @@ namespace LinkDev.IKEA.DAL.Persistance.UnitOfWork
     class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext dbContext;
-        public IDepartmentRepository? DepartmentRepository { get ; set; }
+        public IDepartmentRepository DepartmentRepository { get ; set; }
 
        public UnitOfWork(ApplicationDbContext context)
         {
-            DepartmentRepository departmentRepository = new DepartmentRepository(context);
             dbContext = context;
+            DepartmentRepository = new DepartmentRepository(context);
         }
 
         public int Complete()

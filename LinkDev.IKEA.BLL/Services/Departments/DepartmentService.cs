@@ -1,6 +1,7 @@
 ﻿using LinkDev.IKEA.BLL.Models.Department;
 using LinkDev.IKEA.DAL.Common.Entities.Departments;
 using LinkDev.IKEA.DAL.Contracts;
+using LinkDev.IKEA.DAL.Persistance.Repositories;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using System;
 using System.Collections.Generic;
@@ -37,13 +38,20 @@ namespace LinkDev.IKEA.BLL.Services.Departments
         }
 
         public IEnumerable<DepartmentDto> GetDepartment()
+            
         {
-            var departments = _UnitOfWork.DepartmentRepository.GetAll();
+            if (_UnitOfWork is null) Console.WriteLine("Unit is null");
+            if (_UnitOfWork.DepartmentRepository is null) Console.WriteLine("UD is null");
+         
 
-            foreach(var department in departments)
-            {
-                yield return new DepartmentDto(department.Id,department.Code,department.Name,department.CreationDate);
-            }
+            var departments = _UnitOfWork.DepartmentRepository.GetAll();
+           
+
+                foreach (var department in departments)
+                {
+                    yield return new DepartmentDto(department.Id, department.Code, department.Name, department.CreationDate);
+                }
+            
         }
 
         public DepartmentDetailsDto GetDepartmentById(int id)

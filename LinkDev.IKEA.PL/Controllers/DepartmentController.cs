@@ -1,4 +1,6 @@
 ﻿using LinkDev.IKEA.BLL.Services.Departments;
+using LinkDev.IKEA.DAL.Common.Entities.Departments;
+using LinkDev.IKEA.PL.Models.Department;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LinkDev.IKEA.PL.Controllers
@@ -16,7 +18,17 @@ namespace LinkDev.IKEA.PL.Controllers
         }
         public IActionResult Index([FromServices]IDepartmentService departmentServcide)
         {
-            return View();
+            var departments = _departmentService.GetDepartment();
+            var departmentViewMode = departments.Select(d => new DepartmentViewModel()
+            {
+                Id = d.Id,
+                Code=d.Code,
+                Name=d.Name,
+                CreationDate=d.CreationDate
+            });
+
+
+            return View(departmentViewMode);
         }
     }
 }
