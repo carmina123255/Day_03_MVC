@@ -17,7 +17,7 @@ namespace LinkDev.IKEA.PL.Controllers
         private readonly IDepartmentService _departmentService;
         private readonly ILogger<DepartmentController> logger;
 
-        public DepartmentController(ILogger<DepartmentController>Logger,IDepartmentService departmentServic)
+        public DepartmentController(ILogger<DepartmentController> Logger, IDepartmentService departmentServic)
         {
             logger = Logger;
             _departmentService = departmentServic;
@@ -44,7 +44,7 @@ namespace LinkDev.IKEA.PL.Controllers
         #region Details
         [HttpGet] //Department/Details/Id
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id, string ViewName = "Details")
         {
             if (!id.HasValue)
                 return BadRequest();//400
@@ -58,7 +58,7 @@ namespace LinkDev.IKEA.PL.Controllers
                 Id = department.Id,
                 Code = department.Code,
                 Name = department.Name,
-                Description = department.Description??" ",
+                Description = department.Description ?? " ",
 
                 CreationDate = department.CreationDate,
                 CreatedBy = department.CreatedBy,
@@ -68,7 +68,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
 
             };
-            return View(departmentToView);
+            return View(ViewName, departmentToView);
 
         }
 
@@ -95,7 +95,7 @@ namespace LinkDev.IKEA.PL.Controllers
                     message = "Failed To Create Department";
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {//1-Log Exception in Database or External File
                 logger.LogError(ex.Message, ex.StackTrace!.ToString());
                 //2-Set Message 
@@ -121,7 +121,7 @@ namespace LinkDev.IKEA.PL.Controllers
                 Id = department.Id,
                 Code = department.Code,
                 Name = department.Name,
-                Description = department.Description??"",
+                Description = department.Description ?? "",
                 CreationDate = department.CreationDate,
 
             };
@@ -129,7 +129,7 @@ namespace LinkDev.IKEA.PL.Controllers
             return View(departmentToView);
         }
         [HttpPost]//Post:Department/Edit/id
-        public IActionResult Edit([FromRoute]int id ,UpdateDepartmentViewModel model)
+        public IActionResult Edit([FromRoute] int id, UpdateDepartmentViewModel model)
         {
             if (((int?)TempData["Id"]) != id)
             {
@@ -141,8 +141,8 @@ namespace LinkDev.IKEA.PL.Controllers
             var message = "Department Updated Successfuly";
             try
             {
-               
-                var departmentToUpdate = new UpdateDepartmentDto(id,model.Code, model.Name, model.Description, model.CreationDate);
+
+                var departmentToUpdate = new UpdateDepartmentDto(id, model.Code, model.Name, model.Description, model.CreationDate);
                 var updated = _departmentService.UpdateDepartment(departmentToUpdate) > 0;
                 if (!updated)
                     message = "Failed To Update Department";
@@ -159,5 +159,40 @@ namespace LinkDev.IKEA.PL.Controllers
         }
 
         #endregion
+
+        #region Delete
+
+    ///   [HttpGet]
+    ///  public IActionResult Delete(int? id)
+    ///  {
+    ///      return RedirectToAction(nameof(Details), new {  id, ViewName = "Delete" });
+    ///  }
+
+        [HttpPost]
+       public IActionResult Delete(int id)
+        {
+            
+            var message = "Department Created Successfuly";
+            try
+            {
+                var Deleted = _departmentService.RemoveDepartment(id);
+                if (!Deleted)
+                    message = "Failed To Create Department";
+
+            }
+            catch (Exception ex)
+            {//1-Log Exception in Database or External File
+                logger.LogError(ex.Message, ex.StackTrace!.ToString());
+                //2-Set Message 
+                message = "An error Occurred,Please Try Later";
+            }
+            TempData["Message"] = message;//Appear message in next Action
+            return RedirectToAction(nameof(Index));//next Action 
+        }
+        
+
+        #endregion
+
     }
+
 }
