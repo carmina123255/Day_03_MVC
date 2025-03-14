@@ -1,0 +1,75 @@
+﻿@model DepartmentDetailsViewModels
+
+@{
+    ViewData["Title"] = "Delete Department";
+}
+
+<h1>Are YOu Sure From Delete This Department ?</h1>
+
+<br />
+<br />
+
+
+<ul class="nav justify-content-end" id="departmentTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="general-tab" data-bs-toggle="tab" href="#general" aria-controls="general" aria-selected="true">General</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="administration-tab" data-bs-toggle="tab" href="#administration" aria-controls="administration" aria-selected="true">Administration</a>
+    </li>
+
+</ul>
+
+<div class="tab-content" id="myTapContent">
+    <div class="tab-pane fade show active p-4 border" id="general" role="tabpanel" aria-labelledby="general">
+        <div class="row">
+            <div class="form-group col-6 mb-4">
+                <label class="form-label" asp-for="Code" for="Code">Code </label>
+                <input asp-for="Code" id="code" name="Code" type="text" class="form-control" disabled />
+            </div>
+
+            <div class="form-group col-6 mb-4">
+                <label class="form-label" asp-for="Name" for="Name">Name </label>
+                <input asp-for="Name" id="Name" name="Name" type="text" class="form-control" disabled />
+            </div>
+            <div class="form-group col-6 mb-4">
+                <label class="form-label" asp-for="Description" for="Description">Description </label>
+                <input asp-for="Description" id="Description" name="Description" type="text" class="form-control" disabled />
+            </div>
+            <div class="form-group col-6 mb-4">
+                <label class="form-label" asp-for="CreationDate" for="CreationDate">CreationDate </label>
+                <input asp-for="CreationDate" id="CreationDate" name="CreationDate" type="text" class="form-control" disabled />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active p-4 border" id="administration" role="tabpanel" aria-labelledby="administration-tab">
+            <div class="row col-12">
+                <div class="form-group col-6">
+                    <label class="col-form-label" asp-for="CreatedBy">CreatedBy</label>
+                    <input asp-for="CreatedBy" class="form-control" disabled />
+                </div>
+                <div class="form-group col-6">
+                    <label class="col-form-label" asp-for="CreatedOn">CreatedOn</label>
+                    <input asp-for="CreatedOn" class="form-control" disabled />
+                </div>
+                <div class="form-group col-6">
+                    <label class="col-form-label" asp-for="LastModifiedBy">LastModifiedBy</label>
+                    <input asp-for="LastModifiedBy" class="form-control" disabled />
+                </div>
+                <div class="form-group col-6">
+                    <label class="col-form-label" asp-for="LastModifiedOn">LastModifiedOn</label>
+                    <input asp-for="LastModifiedOn" class="form-control" disabled />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form asp-action="Delete" asp-route-id="@Model.Id" class="mt-4">
+        <input type="Submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">BackToList</a>
+    </form>
+
+</div>
