@@ -30,6 +30,11 @@ namespace LinkDev.IKEA.DAL.Persistance.Data.Configurations.Employees
                 (EmpType) => EmpType.ToString(),
                 (EmpType) => Enum.Parse<EmployeeType>(EmpType)
                 );
+
+            builder.HasOne(E => E.Department)
+                 .WithMany(D => D.Employees)
+                 .HasForeignKey(e => e.DepartmentId)
+                 .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

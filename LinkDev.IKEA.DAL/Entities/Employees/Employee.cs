@@ -1,5 +1,7 @@
 ﻿using LinkDev.IKEA.DAL.Common.Entities;
 using LinkDev.IKEA.DAL.Common.Enums;
+using LinkDev.IKEA.DAL.Entities.Departments;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +24,10 @@ namespace LinkDev.IKEA.DAL.Entities.Employees
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
         public string? Image { get; set; }
+        
+        public Department?  Department { get; set; }
+        public int? DepartmentId { get; set; }
+
+
     }
 }

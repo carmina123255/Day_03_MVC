@@ -1,5 +1,6 @@
 ﻿using LinkDev.IKEA.DAL.Common;
 using LinkDev.IKEA.DAL.Common.Entities;
+using LinkDev.IKEA.DAL.Entities.Employees;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,10 @@ namespace LinkDev.IKEA.DAL.Entities.Departments
         public string? Description { get; set; }
         [JsonConverter(typeof(DataOnlyJsonConverter))]
         public DateOnly CreationDate { get; set; }
+
+        public Employee? Manager { get; set; }
+        public int? ManagerId { get; set; }
+        public ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
+
     }
 }
