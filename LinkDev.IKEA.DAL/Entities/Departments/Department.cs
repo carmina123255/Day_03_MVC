@@ -1,5 +1,5 @@
-﻿using LinkDev.IKEA.DAL.Common;
-using LinkDev.IKEA.DAL.Common.Entities;
+﻿using LinkDev.IKEA.DAL.Common.Entities;
+using LinkDev.IKEA.DAL.Common.JsonConverter;
 using LinkDev.IKEA.DAL.Entities.Employees;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace LinkDev.IKEA.DAL.Entities.Departments
         public required string Name { get; set; }
         public required string Code { get; set; }
         public string? Description { get; set; }
-        [JsonConverter(typeof(DataOnlyJsonConverter))]
+        //[JsonConverter(typeof(DataOnlyJsonConverter))]
         public DateOnly CreationDate { get; set; }
 
         public Employee? Manager { get; set; }
