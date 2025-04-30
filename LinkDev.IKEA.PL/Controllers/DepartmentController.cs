@@ -169,9 +169,9 @@ namespace LinkDev.IKEA.PL.Controllers
     ///  }
 
         [HttpPost]
-       public IActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
-            
+
             var message = "Department Created Successfuly";
             try
             {
@@ -189,7 +189,7 @@ namespace LinkDev.IKEA.PL.Controllers
             TempData["Message"] = message;//Appear message in next Action
             return RedirectToAction(nameof(Index));//next Action 
         }
-        
+
 
         #endregion
 

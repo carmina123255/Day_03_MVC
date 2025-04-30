@@ -63,7 +63,8 @@
     </div>
 
      <div class="mt-4">
-         <a asp-action="Edit asp-route-id=@Model.Id" class="btn btn-success">Edit</a>
+      @*    <a asp-action="Edit" asp-route-id=@Model.Id" class="btn btn-success">Edit</a> *@
+      <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
          <a asp-action="Index" class="btn btn-secondary">BackToList</a>
      </div>
 
