@@ -1,4 +1,4 @@
-﻿using LinkDev.IKEA.DAL.Common.Entities.Departments;
+﻿using LinkDev.IKEA.DAL.Entities.Departments;
 using LinkDev.IKEA.DAL.Persistance.Data.Configurations.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

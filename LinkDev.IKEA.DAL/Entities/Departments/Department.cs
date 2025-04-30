@@ -1,11 +1,13 @@
-﻿using System;
+﻿using LinkDev.IKEA.DAL.Common;
+using LinkDev.IKEA.DAL.Common.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace LinkDev.IKEA.DAL.Common.Entities.Departments
+namespace LinkDev.IKEA.DAL.Entities.Departments
 {
    public class Department:BaseAuditableEntity<int>
     {

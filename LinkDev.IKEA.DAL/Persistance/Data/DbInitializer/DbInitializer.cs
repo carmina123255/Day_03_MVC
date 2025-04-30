@@ -1,5 +1,5 @@
-﻿using LinkDev.IKEA.DAL.Common.Entities.Departments;
-using LinkDev.IKEA.DAL.Contacts;
+﻿using LinkDev.IKEA.DAL.Contacts;
+using LinkDev.IKEA.DAL.Entities.Departments;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

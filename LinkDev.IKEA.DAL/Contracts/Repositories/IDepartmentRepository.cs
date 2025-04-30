@@ -1,4 +1,4 @@
-﻿using LinkDev.IKEA.DAL.Common.Entities.Departments;
+﻿using LinkDev.IKEA.DAL.Entities.Departments;
 using System;
 using System.Collections.Generic;
 using System.Linq;
