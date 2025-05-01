@@ -58,7 +58,7 @@ namespace LinkDev.IKEA.DAL.Persistance.Data.DbInitializer
             if (!_dbContext.Employees.Any())
             {
              
-                var employeedata = File.ReadAllText(@"D:\Route\MVC\Session03\LinkDev.IKIA\LinkDev.IKEA.DAL\Persistance\Data\Seeds\employees.json");
+                var employeedata = File.ReadAllText("../LinkDev.IKEA.DAL/Persistance/Data/Seeds/employees.json");
               
                 var Employees = JsonSerializer.Deserialize<List<Employee>>(employeedata,JsonSerializerOptions);
                 if (Employees?.Count > 0)

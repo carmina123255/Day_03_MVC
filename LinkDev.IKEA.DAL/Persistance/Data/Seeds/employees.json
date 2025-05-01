@@ -1,6 +1,8 @@
 [
     {
-        "Name": "Ahmed",
+
+        "FirstName": "Ahmed",
+        "LastName": "Nasr",
         "Age": 29,
         "Email": "ahmed.nasr@linkdev.com",
         "Salary": 8000,
@@ -16,7 +18,9 @@
 
     },
     {
-        "Name": "Nadia",
+
+        "FirstName": "Nadia",
+        "LastName": "Ahmed",
         "Age": 27,
         "Email": "nadia.ali@gmail.com",
         "Salary": 5000,
@@ -31,7 +35,8 @@
         "LastModifiedBy": ""
     },
     {
-        "Name": "Soha",
+        "FirstName": "Soha",
+        "LastName": "maged",
         "Age": 20,
         "Email": "soha.mohamed@gmail.com",
         "Salary": 3000,
@@ -46,7 +51,9 @@
         "LastModifiedBy": ""
     },
     {
-        "Name": "Mazen",
+
+        "FirstName": "MazenAli",
+        "LastName": "maged",
         "Age": 25,
         "Email": "mazen@gmail.com",
         "Salary": 8000,
@@ -61,7 +68,9 @@
         "LastModifiedBy": ""
     },
     {
-        "Name": "Sameh",
+
+        "FirstName": "Sameh",
+        "LastName": "Ahmed",
         "Age": 30,
         "Email": "sameh@gmail.com",
         "Salary": 9000,
@@ -76,7 +85,9 @@
         "LastModifiedBy": ""
     },
     {
-        "Name": "Pola",
+
+        "FirstName": "Pola",
+        "LastName": "Mounier",
         "Age": 30,
         "Email": "pola@gmail.com",
         "Salary": 5000,

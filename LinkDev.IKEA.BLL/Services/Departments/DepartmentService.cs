@@ -1,5 +1,5 @@
 ﻿using LinkDev.IKEA.BLL.Models.Department;
-using LinkDev.IKEA.DAL.Common.Entities.Departments;
+using LinkDev.IKEA.DAL.Entities.Departments;
 using LinkDev.IKEA.DAL.Contracts;
 using LinkDev.IKEA.DAL.Persistance.Repositories;
 using Microsoft.EntityFrameworkCore.Storage.Json;

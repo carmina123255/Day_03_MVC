@@ -1,6 +1,6 @@
 ﻿using LinkDev.IKEA.BLL.Models.Department;
 using LinkDev.IKEA.BLL.Services.Departments;
-using LinkDev.IKEA.DAL.Common.Entities.Departments;
+using LinkDev.IKEA.DAL.Entities.Departments;
 using LinkDev.IKEA.PL.Models.Department;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
