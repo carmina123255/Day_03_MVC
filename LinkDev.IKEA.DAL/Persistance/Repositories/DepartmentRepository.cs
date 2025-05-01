@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.IKEA.DAL.Persistance.Repositories
 {
-    public class DepartmentRepository : BaseRepository<Department,int>
+    public class DepartmentRepository : BaseRepository<Department,int>,IDepartmentRepository
     {
           public DepartmentRepository(ApplicationDbContext dbContext) : base(dbContext)
         {

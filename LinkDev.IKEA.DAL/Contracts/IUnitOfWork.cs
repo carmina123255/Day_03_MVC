@@ -1,4 +1,5 @@
 ﻿using LinkDev.IKEA.DAL.Contacts.Repositories;
+using LinkDev.IKEA.DAL.Contracts.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,8 @@ namespace LinkDev.IKEA.DAL.Contracts
 {
    public interface IUnitOfWork
     {
-        public IDepartmentRepository  DepartmentRepository { get;  }
+        public IDepartmentRepository Departments { get;}
+        public IEmployeeRepository Employees { get;  }
 
         int Complete();
         void Dispose();
