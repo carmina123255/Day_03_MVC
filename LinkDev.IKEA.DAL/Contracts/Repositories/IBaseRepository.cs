@@ -17,7 +17,7 @@ namespace LinkDev.IKEA.DAL.Contracts.Repositories
         public TEntity? Get(int id);
         public TEntity? Get(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includes = null);
         public IEnumerable<TEntity> GetAll(bool WithTracking = false);
-        public PaginatedResult<TEntity>GetAll(QueryParameters Parameters, Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderby = null, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includes = null);
+        public PaginatedResult<TEntity>GetAll(QueryParameters Parameters, Expression<Func<TEntity, bool>>? filter=null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderby = null, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includes = null);
         public void Add(TEntity Entity);
         public void Delete(int id);
         public void Update(TEntity Entity);

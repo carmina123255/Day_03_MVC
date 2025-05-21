@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace LinkDev.IKEA.BLL.Models.Employee
 {
    public  record EmployeeDto(int Id, string FirstName, 
-       string LastName,int Age, string? Email, string? phoneNumber,
+       string LastName,int? Age, string? Email, string? phoneNumber,
        string? Address, decimal Salary, bool IsActive,
        DateOnly HireDate, Gender Gender, EmployeeType EmployeeType,
        int? DepartmentId, string? CreatedBy, DateTime CreatedOn
