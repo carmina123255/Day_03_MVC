@@ -12,11 +12,13 @@ namespace LinkDev.IKEA.PL.Controllers
 {
     public class EmployeeController:Controller
     {
+        #region Services
         private readonly IEmployeeService _employeeService;
         private readonly IDepartmentService _departmentService;
         private readonly ILogger<EmployeeController> _logger;
         private readonly IWebHostEnvironment hostEnvironment;
 
+        #endregion
         public EmployeeController(IEmployeeService employeeService,
             IDepartmentService departmentSrvice, ILogger<EmployeeController> logger,IWebHostEnvironment hostEnvironment)
         {
@@ -27,8 +29,9 @@ namespace LinkDev.IKEA.PL.Controllers
             _departmentService = departmentSrvice;
         }
 
+        #region Index 
         [HttpGet] //Get:/Employee/Index
-        public IActionResult Index(int pageIndex=1,int PageSize = 10)
+        public IActionResult Index(int pageIndex = 1, int PageSize = 10)
         {
 
 
@@ -57,17 +60,19 @@ namespace LinkDev.IKEA.PL.Controllers
                     LastModifiedBy = e.LastModifiedBy,
                     CreatedOn = e.CreatedOn,
                     LastModifiedOn = e.LastModifiedOn,
-                    Department=e.DepartmentName
+                    Department = e.DepartmentName
                 }),
-                Page=employee.PageIndex,
-                PageSize=employee.PageSize,
-                TotalCount=employee.TotalCount,
- 
+                Page = employee.PageIndex,
+                PageSize = employee.PageSize,
+                TotalCount = employee.TotalCount,
+
             };
 
             return View(model);
         }
+        #endregion
 
+        #region Details 
 
         [HttpGet]
         public IActionResult Details(int? id)
@@ -88,13 +93,13 @@ namespace LinkDev.IKEA.PL.Controllers
                 Address = employeeDetails.Employee.Address,
                 EmployeeType = employeeDetails.Employee.EmployeeType,
                 IsActive = employeeDetails.Employee.IsActive,
-                Age=employeeDetails.Employee.Age,
+                Age = employeeDetails.Employee.Age,
 
                 // Department Information
-                DepartmentId =  employeeDetails.Department.Id,
+                DepartmentId = employeeDetails.Department.Id,
                 DepartmentName = employeeDetails.Department.Name,
                 DepartmentCode = employeeDetails.Department.Code,
-                DepartmentDescription=employeeDetails.Department.Description,
+                DepartmentDescription = employeeDetails.Department.Description,
 
                 // Audit Information
                 CreatedBy = employeeDetails.Employee.CreatedBy,
@@ -105,6 +110,10 @@ namespace LinkDev.IKEA.PL.Controllers
             return View(model);
         }
 
+        #endregion
+
+        #region Create
+         
         [HttpGet] // GEt:/Employee/Create 
 
         public IActionResult Create()
@@ -117,7 +126,7 @@ namespace LinkDev.IKEA.PL.Controllers
                     Text = d.Name,
                     Value = d.Id.ToString()
                 }),
-             DateOfBirth=DateOnly.FromDateTime(DateTime.Now.AddYears(-18))
+                DateOfBirth = DateOnly.FromDateTime(DateTime.Now.AddYears(-18))
             };
             return View(viewModel);
         }
@@ -132,7 +141,7 @@ namespace LinkDev.IKEA.PL.Controllers
             {
                 var employeeToCreate = new EmployeeCreateDto(model.FirstName, model.LastName, model.Address, model.Salary, model.Email, model.PhoneNumber, model.DateOfBirth, model.Gender, model.EmployeeType, model.DepartmentId);
 
-                var created = _employeeService.CreateEmployee(employeeToCreate)>0;
+                var created = _employeeService.CreateEmployee(employeeToCreate) > 0;
 
                 if (created)
                     return RedirectToAction(nameof(Index));
@@ -149,6 +158,10 @@ namespace LinkDev.IKEA.PL.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        #endregion
+
+
+        #region Update 
         [HttpGet] //Get : /Employee/Edit/{id?}
         public IActionResult Edit(int? id)
         {
@@ -165,10 +178,10 @@ namespace LinkDev.IKEA.PL.Controllers
                 Email = employee.Email,
                 PhoneNumber = employee.phoneNumber,
                 Gender = employee.Gender,
-                IsActive=employee.IsActive,
+                IsActive = employee.IsActive,
                 EmployeeType = employee.EmployeeType,
-                DepartmentId=employee.DepartmentId
-                
+                DepartmentId = employee.DepartmentId
+
             };
             return View(viewModel);
 
@@ -176,7 +189,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
         [HttpPost]
 
-        public IActionResult Edit([FromRoute]int id, EmployeeEditViewModel model )
+        public IActionResult Edit([FromRoute] int id, EmployeeEditViewModel model)
         {
             if (((int?)TempData["Id"]) != id)
             {
@@ -189,7 +202,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
             try
             {
-                var employeeToUpdate = new EmployeeUpdateDto (model.Id,model.FirstName, model.LastName, model.Address, model.Salary, model.Email, model.PhoneNumber,model.DateOfBirth,model.IsActive, model.Gender, model.EmployeeType, model.DepartmentId);
+                var employeeToUpdate = new EmployeeUpdateDto(model.Id, model.FirstName, model.LastName, model.Address, model.Salary, model.Email, model.PhoneNumber, model.DateOfBirth, model.IsActive, model.Gender, model.EmployeeType, model.DepartmentId);
                 var updated = _employeeService.UpdateEmployee(employeeToUpdate) > 0;
                 if (!updated) message = "An  error occure ";
             }
@@ -203,7 +216,9 @@ namespace LinkDev.IKEA.PL.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        #endregion
 
+        #region Delete 
         [HttpPost]
         public IActionResult Delete(int id)
         {
@@ -212,7 +227,7 @@ namespace LinkDev.IKEA.PL.Controllers
             try
             {
                 _employeeService.DeleteEmployee(id);
-               
+
 
             }
             catch (Exception ex)
@@ -228,6 +243,7 @@ namespace LinkDev.IKEA.PL.Controllers
             return RedirectToAction(nameof(Index));//next Action 
         }
 
+        #endregion
 
 
 
