@@ -69,7 +69,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                 queryParameters.PageSize = 10;
 
             if(queryParameters.PageSize>100)
-                queryParameters.PageSize = 10;
+                queryParameters.PageSize = 100;
 
             var employees = _unitOfWork.Employees.GetAll(
                Parameters:queryParameters,
@@ -104,7 +104,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                 Age = DateTime.Now.Year - employeeDto.BirthOfDate.Year,
                 Address = employeeDto.Address,
                 DepartmentId = employeeDto.DepartmentId,
-                PhoneNumber = employeeDto.PhoneNumber,
+                PhoneNumber = employeeDto.PhoneNumber, 
                 Gender = employeeDto.Gender,
                 EmployeeType = employeeDto.EmployeeType,
                 Salary = employeeDto.Salary,
