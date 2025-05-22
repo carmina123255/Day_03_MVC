@@ -16,7 +16,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
 
         PaginatedResult<EmployeeDto> GetPaginatedEmployees(QueryParameters? queryParameters);
 
-        void CreateEmployee(EmployeeCreateDto employee);
+        int CreateEmployee(EmployeeCreateDto employee);
         void UpdateEmployee(EmployeeUpdateDto employee);
         void DeleteEmployee(int id);
     }

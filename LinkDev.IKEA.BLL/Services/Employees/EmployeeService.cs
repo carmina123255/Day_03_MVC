@@ -94,7 +94,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
 
         }
 
-        public void CreateEmployee(EmployeeCreateDto employeeDto)
+        public int CreateEmployee(EmployeeCreateDto employeeDto)
         {
             validateEmployeeCreateBussinessRules(employeeDto);
             var employee = new Employee()
@@ -115,7 +115,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
             employee.IsActive = true;
 
             _unitOfWork.Employees.Add(employee);
-            _unitOfWork.Complete();
+           return  _unitOfWork.Complete();
         }
 
      
