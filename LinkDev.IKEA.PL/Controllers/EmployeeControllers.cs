@@ -15,12 +15,14 @@ namespace LinkDev.IKEA.PL.Controllers
         private readonly IEmployeeService _employeeService;
         private readonly IDepartmentService _departmentService;
         private readonly ILogger<EmployeeController> _logger;
+        private readonly IWebHostEnvironment hostEnvironment;
 
         public EmployeeController(IEmployeeService employeeService,
-            IDepartmentService departmentSrvice, ILogger<EmployeeController> logger)
+            IDepartmentService departmentSrvice, ILogger<EmployeeController> logger,IWebHostEnvironment hostEnvironment)
         {
             
             _logger = logger;
+            this.hostEnvironment = hostEnvironment;
             _employeeService = employeeService;
             _departmentService = departmentSrvice;
         }
@@ -202,9 +204,35 @@ namespace LinkDev.IKEA.PL.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-    
-    
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+
+            var message = "Department Created Successfuly";
+            try
+            {
+                _employeeService.DeleteEmployee(id);
+               
+
+            }
+            catch (Exception ex)
+            {//1-Log Exception in Database or External File
+                _logger.LogError(ex.Message, ex.StackTrace!.ToString());
+                //2-Set Message 
+                if (hostEnvironment.IsDevelopment())
+                    message = ex.Message;
+                else
+                    message = "There is Error Occur , Try Again";
+            }
+            TempData["Message"] = message;//Appear message in next Action
+            return RedirectToAction(nameof(Index));//next Action 
+        }
+
+
+
+
+
     }
 
 
-    }
+}

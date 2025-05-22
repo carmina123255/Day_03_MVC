@@ -141,10 +141,10 @@ namespace LinkDev.IKEA.BLL.Services.Employees
 
 
 
-        public void DeleteEmployee(int id)
+        public void  DeleteEmployee(int id)
         {
             _unitOfWork.Employees.Delete(id);
-            _unitOfWork.Complete();
+             _unitOfWork.Complete();
         }
 
         #region HelperMethod 

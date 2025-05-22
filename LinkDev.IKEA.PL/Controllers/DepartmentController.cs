@@ -172,7 +172,7 @@ namespace LinkDev.IKEA.PL.Controllers
         public IActionResult Delete(int id)
         {
 
-            var message = "Department Created Successfuly";
+            var message = "Department Deleted Successfuly";
             try
             {
                 var Deleted = _departmentService.RemoveDepartment(id);
