@@ -27,7 +27,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
             var employee = _unitOfWork.Employees.Get(id);
             if (employee is null)
                 return null;
-            var employeeDto = new EmployeeDto(employee.Id, employee.FirstName, employee.LastName,employee.Department.Name, employee.Age , employee.Email
+            var employeeDto = new EmployeeDto(employee.Id, employee.FirstName, employee.LastName,employee.Department?.Name??string.Empty, employee.Age , employee.Email
                 , employee.PhoneNumber, employee.Address, employee.Salary, employee.IsActive, employee.HireDate, employee.Gender, employee.
                 EmployeeType, employee.DepartmentId, employee.CreatedBy, employee.CreatedOn, employee.LastModifiedBy, employee.LastModifiedOn);
 
@@ -119,10 +119,10 @@ namespace LinkDev.IKEA.BLL.Services.Employees
         }
 
      
-        public void UpdateEmployee(EmployeeUpdateDto employeeDto)
+        public int UpdateEmployee(EmployeeUpdateDto employeeDto)
         {
             var existingemp = _unitOfWork.Employees.Get(employeeDto.Id);
-            if (existingemp is null) return;
+            if (existingemp is null) return -1;
             validateEmployeeUpdateBussinessRules(employeeDto, existingemp);
             existingemp.FirstName = employeeDto.FirstName;
             existingemp.LastName = employeeDto.LastName;
@@ -135,7 +135,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
             existingemp.EmployeeType = employeeDto.EmployeeType;
 
             _unitOfWork.Employees.Update(existingemp);
-            _unitOfWork.Complete();
+           return  _unitOfWork.Complete();
         
         }
 
@@ -177,11 +177,12 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                     throw new Exception($"Department with Id {employee.DepartmentId} does not exit .");
 
             }
-            
-            var newsalary= existingemp.Salary * existingemp.Salary * 0.1m;
-            if (employee.Salary<newsalary)
-                throw new Exception($"salary must be larger than or equal{newsalary}");
-
+            if (existingemp.Salary != employee.Salary)
+            {
+                var newsalary = existingemp.Salary * existingemp.Salary * 0.1m;
+                if (employee.Salary < newsalary)
+                    throw new Exception($"salary must be larger than or equal{newsalary}");
+            }
         }
         #endregion
     }

@@ -147,5 +147,64 @@ namespace LinkDev.IKEA.PL.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+        [HttpGet] //Get : /Employee/Edit/{id?}
+        public IActionResult Edit(int? id)
+        {
+            if (!id.HasValue) return BadRequest();
+            var employee = _employeeService.GetEmployeeById(id.Value);
+            if (employee is null) return NotFound();
+
+            var viewModel = new EmployeeEditViewModel()
+            {
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Address = employee.Address,
+                Salary = employee.Salary,
+                Email = employee.Email,
+                PhoneNumber = employee.phoneNumber,
+                Gender = employee.Gender,
+                IsActive=employee.IsActive,
+                EmployeeType = employee.EmployeeType,
+                DepartmentId=employee.DepartmentId
+                
+            };
+            return View(viewModel);
+
         }
+
+        [HttpPost]
+
+        public IActionResult Edit([FromRoute]int id, EmployeeEditViewModel model )
+        {
+            if (((int?)TempData["Id"]) != id)
+            {
+                ModelState.AddModelError("Id", "Invalid Id");
+                return View(model);
+            }
+            if (!ModelState.IsValid)
+                return View(model);
+            var message = "Department Updated Successfuly";
+
+            try
+            {
+                var employeeToUpdate = new EmployeeUpdateDto (model.Id,model.FirstName, model.LastName, model.Address, model.Salary, model.Email, model.PhoneNumber,model.DateOfBirth,model.IsActive, model.Gender, model.EmployeeType, model.DepartmentId);
+                var updated = _employeeService.UpdateEmployee(employeeToUpdate) > 0;
+                if (!updated) message = "An  error occure ";
+            }
+            catch (Exception ex)
+            {
+                //1-Log Exception in Database or External File
+                _logger.LogError(ex.Message, ex.StackTrace!.ToString());
+                //2-Set Message 
+                message = "An error Occurred,Please Try Later";
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+    
+    
+    }
+
+
     }
