@@ -46,12 +46,12 @@ namespace LinkDev.IKEA.DAL.Persistance.Repositories
         public void Update(TEntity Entity)
        => _dbSet.Update(Entity);
 
-        public TEntity? Get(Expression<Func<TEntity, bool>> filter, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includes = null)
+        public TEntity? Get(Expression<Func<TEntity, bool>>? filter=null, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includes = null)
         {
             IQueryable<TEntity> query = _dbSet;
             if (includes is not null)
                 query = includes(query);
-
+            if(query is not null )
             query = query.Where(filter);
             return query.FirstOrDefault();
         }
@@ -61,7 +61,7 @@ namespace LinkDev.IKEA.DAL.Persistance.Repositories
             IQueryable<TEntity> query = _dbSet;
             if (includes is not null)
                 query = includes(query);
-
+            if (filter is not null)
             query = query.Where(filter);
             var totalCount = query.Count();
            if(orderby is not  null)
