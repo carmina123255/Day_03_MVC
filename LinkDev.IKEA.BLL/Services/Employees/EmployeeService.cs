@@ -72,10 +72,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                 queryParameters.PageSize = 100;
 
             var employees = _unitOfWork.Employees.GetAll(
-               Parameters:queryParameters,
-                includes: E => E.Include(nameof(Employee.Department))
-                //filter:E=>E.FirstName.contains(queryParamters.searchterm)
-                //orderby:E=E.Age
+               Parameters:queryParameters
                 );
 
             var result = new PaginatedResult<EmployeeDto>()

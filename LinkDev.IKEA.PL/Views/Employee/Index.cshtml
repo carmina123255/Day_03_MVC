@@ -13,7 +13,7 @@
         <div class="col-md-6">
             <form asp-action="Index" method="get" class="form-inline float-right">
                 <div class="input-group">
-                    <input type="text" name="searchTerm" value="@Model.SearchTerm" class="form-control" placeholder="Search employees...">
+                    <input type="text" asp-for="SearchTerm" value="@Model.SearchTerm" class="form-control" placeholder="Search employees...">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-outline-secondary">Search</button>
                     </div>
@@ -154,7 +154,7 @@
     <script>
         $(document).ready(function() {
             // Delegated event handler for delete buttons
-            $(document).on('click', '.delete-btn', function() {  // Changed from '#delete-btn' to '.delete-btn'
+            $(document).on('click', '.delete-btn', function() { 
                 var id = $(this).data('id');
                 var name = $(this).data('name');
 

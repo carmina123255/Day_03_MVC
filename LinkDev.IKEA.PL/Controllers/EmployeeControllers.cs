@@ -31,14 +31,16 @@ namespace LinkDev.IKEA.PL.Controllers
 
         #region Index 
         [HttpGet] //Get:/Employee/Index
-        public IActionResult Index(int pageIndex = 1, int PageSize = 10)
+        public IActionResult Index(string SearchTerm="",int pageIndex = 1, int PageSize = 10)
         {
 
 
             var queryParameters = new QueryParameters
             {
                 PageSize = PageSize,
-                PageIndex = pageIndex
+                PageIndex = pageIndex,
+                Searchterm=SearchTerm
+                
             };
             var employee = _employeeService.GetPaginatedEmployees(queryParameters);
             var model = new EmployeeListViewModel()

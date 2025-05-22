@@ -17,6 +17,12 @@ namespace LinkDev.IKEA.DAL.Persistance.Common
             get => _pageSize;
             set => _pageSize = value > MaxPageSize ? MaxPageSize : value;
         }
+        private string? serachTerm;
+        public string Searchterm
+        {
+            get => serachTerm;
+            set { serachTerm = value.ToLower(); }
+        }
     }
 }
 

@@ -12,6 +12,7 @@
         public string? SearchTerm { get; set; }
         public string? SortedBy { get; set; }
         public bool SortedAscending { get;set; }
+      
 
 
     }
