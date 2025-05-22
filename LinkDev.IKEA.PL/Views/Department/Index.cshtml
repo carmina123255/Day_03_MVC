@@ -62,35 +62,48 @@
                        @* <a asp-controller="Department" asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">
                             <i class="fa-solid fa-trash"></i>Delete
                         </a>*@
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"data-bs-target="#deleteModel" >
-                            <i class="fas fa-trash"></i>Delete
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="@department.Id" data-name="@department.Name">
+                            <i class="fas fa-trash"></i> Delete
                         </button>
                     </td>
 
                 </tr>
-                <div class="modal fade" id="deleteModel" tabindex="-1" role="dialog">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Delete Department</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Are YOu Sure to Delete this Department</p>
-                            </div>
-                            <div class="modal-footer">
-                           <form asp-action="Delete" asp-route-id="@department.Id">
-                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                             <input type="submit" value="Delete" class="btn btn-danger" />
-                           </form>    
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
             }
  
         </tbody>
     </table>
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // Delegated event handler for delete buttons
+            $(document).on('click', '.delete-btn', function() {  // Changed from '#delete-btn' to '.delete-btn'
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+
+                // Generate the confirmation dialog dynamically
+                Swal.fire({
+                    title: 'Confirm Delete',
+                    html: 'Are you sure you want to delete <strong>' + name + '</strong>?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Delete',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var form = $('<form></form>').attr({
+                            method: "post",  // Fixed syntax (was method="post")
+                            action: '/Deparment/Delete/' + id  // Added missing slash
+                        });
+                        form.appendTo('body').submit();
+                    }
+                });
+            });
+        });
+    </script>
 }
