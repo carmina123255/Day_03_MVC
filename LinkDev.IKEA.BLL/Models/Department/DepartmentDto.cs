@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace LinkDev.IKEA.BLL.Models.Department
 {
-    public record DepartmentDto(int Id, string Code, string Name, DateOnly CreationDate);
+    public record DepartmentDto(int Id, string Code, string Name, DateOnly CreationDate,string? Manager,string? Description );
 }

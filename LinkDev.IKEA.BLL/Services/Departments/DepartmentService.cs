@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace LinkDev.IKEA.BLL.Services.Departments
 {
@@ -49,16 +50,16 @@ namespace LinkDev.IKEA.BLL.Services.Departments
 
                 foreach (var department in departments)
                 {
-                    yield return new DepartmentDto(department.Id, department.Code, department.Name, department.CreationDate);
+                    yield return new DepartmentDto(department.Id, department.Code, department.Name, department.CreationDate,department.Manager?.FirstName,department.Description);
                 }
             
         }
 
         public DepartmentDetailsDto GetDepartmentById(int id)
         {
-            var department = _UnitOfWork.Departments.Get(id);
+            var department = _UnitOfWork.Departments.Get(filter:D=>D.Id==id,includes:query=>query.Include(nameof(Department.Manager)));
             if (department is null) return null;
-            return new DepartmentDetailsDto(department.Id, department.Name, department.Code, department.Description,department.CreationDate,department.CreatedBy,department.CreatedOn,department.LastModifiedBy,department.LastModifiedOn);
+            return new DepartmentDetailsDto(department.Id, department.Name, department.Code, department.Description,department.CreationDate,department.CreatedBy,department.CreatedOn,department.LastModifiedBy,department.LastModifiedOn,$"{department.Manager?.FirstName} {department.Manager?.LastName}");
         }
 
         public bool RemoveDepartment(int id)

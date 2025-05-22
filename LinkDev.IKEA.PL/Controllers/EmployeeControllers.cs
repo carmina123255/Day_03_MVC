@@ -1,5 +1,6 @@
 ﻿using LinkDev.IKEA.BLL.Services.Employees;
 using LinkDev.IKEA.DAL.Contracts.Repositories;
+using LinkDev.IKEA.DAL.Entities.Departments;
 using LinkDev.IKEA.DAL.Persistance.Common;
 using LinkDev.IKEA.PL.Models.Employee;
 using Microsoft.AspNetCore.Mvc;
@@ -57,5 +58,43 @@ namespace LinkDev.IKEA.PL.Controllers
 
             return View(model);
         }
+
+
+        [HttpGet]
+        public IActionResult Details(int? id)
+        {
+            if (!id.HasValue) return BadRequest();
+
+            var employeeDetails = _employeeService.GetEmployeeDetails(id.Value);
+            if (employeeDetails is null) return NotFound();
+            var model = new EmployeeDetailsViewModel
+            {
+
+                Id = employeeDetails.Employee.Id,
+                FirstName = employeeDetails.Employee.FirstName,
+                LastName = employeeDetails.Employee.LastName,
+                Email = employeeDetails.Employee.Email,
+                PhoneNumber = employeeDetails.Employee.phoneNumber,
+                Gender = employeeDetails.Employee.Gender,
+                Address = employeeDetails.Employee.Address,
+                EmployeeType = employeeDetails.Employee.EmployeeType,
+                IsActive = employeeDetails.Employee.IsActive,
+                Age=employeeDetails.Employee.Age,
+
+                // Department Information
+                DepartmentId =  employeeDetails.Department.Id,
+                DepartmentName = employeeDetails.Department.Name,
+                DepartmentCode = employeeDetails.Department.Code,
+                DepartmentDescription=employeeDetails.Department.Description,
+
+                // Audit Information
+                CreatedBy = employeeDetails.Employee.CreatedBy,
+                CreatedOn = employeeDetails.Employee.CreatedOn,
+                LastModifiedBy = employeeDetails.Employee.LastModifiedBy,
+                LastModifiedOn = employeeDetails.Employee.LastModifiedOn
+            };
+            return View(model);
+        }
+
+        }
     }
-}

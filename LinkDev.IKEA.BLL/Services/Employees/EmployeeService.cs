@@ -49,7 +49,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
 
             DepartmentDto departmentDto = default!;
             if (employee.Department is not null)
-                departmentDto = new DepartmentDto(employee.Department.Id, employee.Department.Code, employee.Department.Name, employee.Department.CreationDate);
+                departmentDto = new DepartmentDto(employee.Department.Id, employee.Department.Code, employee.Department.Name, employee.Department.CreationDate,$"{employee.Department?.Manager?.FirstName} {employee.Department?.Manager?.LastName}",employee.Department?.Description);
 
             var YearsOfExperience = DateTime.Now.Year - employee.HireDate.Year;
 
