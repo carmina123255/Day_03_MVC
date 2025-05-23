@@ -55,5 +55,7 @@ namespace LinkDev.IKEA.DAL.Persistance.Repositories
 
             return base.GetAll(Parameters, filter, OrderBy, includes);
         }
+         
+    
     }
 }

@@ -7,6 +7,8 @@ using LinkDev.IKEA.DAL.Entities.Departments;
 using LinkDev.IKEA.DAL.Persistance.Common;
 using LinkDev.IKEA.PL.Models.Employee;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using Microsoft.Extensions.Hosting;
 
 namespace LinkDev.IKEA.PL.Controllers
 {
@@ -250,6 +252,39 @@ namespace LinkDev.IKEA.PL.Controllers
             }
             TempData["Message"] = message;//Appear message in next Action
             return RedirectToAction(nameof(Index));//next Action 
+        }
+
+        #endregion
+
+
+        #region Toggle Status 
+        [HttpPost]
+        public IActionResult ToggleStatus(int id, bool IsActive)
+        {
+            var message = "";
+            try
+            {
+                var result = _employeeService.changeEmployeeStatus(id, IsActive);
+
+                // Set message based on the intended action, not the result
+                message = result ?
+                    "Employee activated successfully" :
+                    "Employee deactivated successfully";
+            }
+            catch (Exception ex)
+            {
+                // 1 - Log Exception in Database or External File
+                _logger.LogError(ex, "Error changing employee status for ID {EmployeeId}: {ErrorMessage}", id, ex.Message);
+
+                // 2 - Set Message 
+                if (hostEnvironment.IsDevelopment())
+                    message = ex.Message;
+                else
+                    message = "An error occurred. Please try again.";
+            }
+
+            TempData["Message"] = message; // Appear message in next Action
+            return RedirectToAction(nameof(Index));
         }
 
         #endregion

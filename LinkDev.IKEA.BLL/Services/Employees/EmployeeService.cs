@@ -136,7 +136,18 @@ namespace LinkDev.IKEA.BLL.Services.Employees
         
         }
 
+        public bool changeEmployeeStatus(int id, bool isActive)
+        {
+            var employee = _unitOfWork.Employees.Get(id);
+            if (employee is null)
+                throw new Exception($"Employee with Id {id} doesn't exist ");
 
+            employee.IsActive = isActive;
+            _unitOfWork.Employees.Update(employee);
+             _unitOfWork.Complete();
+            return true;
+
+        }
 
         public void  DeleteEmployee(int id)
         {
@@ -181,6 +192,8 @@ namespace LinkDev.IKEA.BLL.Services.Employees
                     throw new Exception($"salary must be larger than or equal{newsalary}");
             }
         }
+
+        
         #endregion
     }
 }
