@@ -1,0 +1,109 @@
+﻿@model IEnumerable<DepartmentViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>All Departments</h1>
+<br />
+<br />
+
+@if(TempData["Message"] is not null)
+{
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="..." class="rounded mr-2" alt="...">
+            <strong class="mr-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+           @TempData["Message"]
+        </div>
+    </div>
+}
+
+<a asp-controller="Department" asp-action="Create" class="btn btn-primary">Create New Department</a>
+<br />
+
+@if(Model.Any())
+{
+    <table class="table table-hover table-striped mt-3">
+        <thead class="text-center">
+            <tr>
+                <th>@Html.DisplayNameFor(D=>D.Code)</th>
+                <th>@Html.DisplayNameFor(D=>D.Name)</th>
+                <th>@Html.DisplayNameFor(D=>D.CreationDate)</th>
+                <th>Details</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            @foreach(var department in Model)
+            {
+                <tr>
+                    <td>@department.Code</td>
+                    <td>@department.Name</td>
+                    <td>@department.CreationDate</td>
+                  <td>
+                      <a asp-controller="Department" asp-action="Details" asp-route-id="@department.Id" class="btn btn-warning">
+                            <i class="fa-solid fa-eye"></i>Details
+                      </a>
+                  </td>
+                    <td>
+                        <a asp-controller="Department" asp-action="Edit" asp-route-id="@department.Id" class="btn btn-success">
+                            <i class="fa-regular fa-pen-to-square"></i>Update
+                        </a>
+                    </td>
+                    <td>
+                       @* <a asp-controller="Department" asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">
+                            <i class="fa-solid fa-trash"></i>Delete
+                        </a>*@
+                        <button class="btn btn-danger btn-sm delete-btn" data-id="@department.Id" data-name="@department.Name">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+
+                </tr>
+               
+            }
+ 
+        </tbody>
+    </table>
+}
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // Delegated event handler for delete buttons
+            $(document).on('click', '.delete-btn', function() {  // Changed from '#delete-btn' to '.delete-btn'
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+
+                // Generate the confirmation dialog dynamically
+                Swal.fire({
+                    title: 'Confirm Delete',
+                    html: 'Are you sure you want to delete <strong>' + name + '</strong>?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Delete',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var form = $('<form></form>').attr({
+                            method: "post",  // Fixed syntax (was method="post")
+                            action: '/Deparment/Delete/' + id  // Added missing slash
+                        });
+                        form.appendTo('body').submit();
+                    }
+                });
+            });
+        });
+    </script>
+}
