@@ -18,8 +18,7 @@ namespace LinkDev.IKEA.PL
             #region Configure services 
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
-           
+            builder.Services.AddWebServices();
             #region OR
             /// builder.Services.AddDbContext<ApplicationDbContext>(
             ///     optionsAction: (OptionBuilder) =>

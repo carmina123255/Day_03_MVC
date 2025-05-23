@@ -1,4 +1,5 @@
-﻿using LinkDev.IKEA.BLL.Models.Department;
+﻿using AutoMapper;
+using LinkDev.IKEA.BLL.Models.Department;
 using LinkDev.IKEA.BLL.Models.Employee;
 using LinkDev.IKEA.DAL.Contracts;
 using LinkDev.IKEA.DAL.Entities.Employees;
@@ -15,10 +16,12 @@ namespace LinkDev.IKEA.BLL.Services.Employees
     public class EmployeeService : IEmployeeService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public EmployeeService(IUnitOfWork unitOfWork)
+        public EmployeeService(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
 
@@ -27,10 +30,12 @@ namespace LinkDev.IKEA.BLL.Services.Employees
             var employee = _unitOfWork.Employees.Get(id);
             if (employee is null)
                 return null;
-            var employeeDto = new EmployeeDto(employee.Id, employee.FirstName, employee.LastName,employee.Department?.Name??string.Empty, employee.Age , employee.Email
-                , employee.PhoneNumber, employee.Address, employee.Salary, employee.IsActive, employee.HireDate, employee.Gender, employee.
-                EmployeeType, employee.DepartmentId, employee.CreatedBy, employee.CreatedOn, employee.LastModifiedBy, employee.LastModifiedOn);
+            ///var employeeDto = new EmployeeDto(employee.Id, employee.FirstName, employee.LastName,employee.Department?.Name??string.Empty, employee.Age , employee.Email
+            ///    , employee.PhoneNumber, employee.Address, employee.Salary, employee.IsActive, employee.HireDate, employee.Gender, employee.
+            ///    EmployeeType, employee.DepartmentId, employee.CreatedBy, employee.CreatedOn, employee.LastModifiedBy, employee.LastModifiedOn);
+            ///
 
+            var employeeDto = _mapper.Map<EmployeeDto>(employee);
             return employeeDto;
         }
 
@@ -43,14 +48,16 @@ namespace LinkDev.IKEA.BLL.Services.Employees
             if (employee is null)
                 return null;
 
-            var employeeDto = new EmployeeDto(employee.Id, employee.FirstName, employee.LastName,employee.Department.Name, employee.Age, employee.Email
-              , employee.PhoneNumber, employee.Address, employee.Salary, employee.IsActive, employee.HireDate, employee.Gender, employee.
-           EmployeeType, employee.DepartmentId, employee.CreatedBy, employee.CreatedOn, employee.LastModifiedBy, employee.LastModifiedOn);
+            ///  var employeeDto = new EmployeeDto(employee.Id, employee.FirstName, employee.LastName,employee.Department.Name, employee.Age, employee.Email
+            ///    , employee.PhoneNumber, employee.Address, employee.Salary, employee.IsActive, employee.HireDate, employee.Gender, employee.
+            /// EmployeeType, employee.DepartmentId, employee.CreatedBy, employee.CreatedOn, employee.LastModifiedBy, employee.LastModifiedOn);
 
-            DepartmentDto departmentDto = default!;
-            if (employee.Department is not null)
-                departmentDto = new DepartmentDto(employee.Department.Id, employee.Department.Code, employee.Department.Name, employee.Department.CreationDate,$"{employee.Department?.Manager?.FirstName} {employee.Department?.Manager?.LastName}",employee.Department?.Description);
+            var employeeDto = _mapper.Map<EmployeeDto>(employee);
+            /// DepartmentDto departmentDto = default!;
+            ///if (employee.Department is not null)
+            ///departmentDto = new DepartmentDto(employee.Department.Id, employee.Department.Code, employee.Department.Name, employee.Department.CreationDate,$"{employee.Department?.Manager?.FirstName} {employee.Department?.Manager?.LastName}",employee.Department?.Description);
 
+            var departmentDto = _mapper.Map<DepartmentDto>(employee.Department);
             var YearsOfExperience = DateTime.Now.Year - employee.HireDate.Year;
 
             var employeeDetailsDto = new EmployeeDetailsDto(employeeDto, departmentDto, YearsOfExperience);
@@ -74,12 +81,14 @@ namespace LinkDev.IKEA.BLL.Services.Employees
             var employees = _unitOfWork.Employees.GetAll(
                Parameters:queryParameters
                 );
-
+            var employeeDtos = _mapper.Map<IEnumerable<EmployeeDto>>(employees.Data);
             var result = new PaginatedResult<EmployeeDto>()
             {
-                Data = employees.Data.Select(employee => new EmployeeDto(employee.Id, employee.FirstName, employee.LastName, employee.Department.Name, employee.Age, employee.Email
-              , employee.PhoneNumber, employee.Address, employee.Salary, employee.IsActive, employee.HireDate, employee.Gender, employee.
-                EmployeeType, employee.DepartmentId, employee.CreatedBy, employee.CreatedOn, employee.LastModifiedBy, employee.LastModifiedOn)),
+             ///  Data = employees.Data.Select(employee => new EmployeeDto(employee.Id, employee.FirstName, employee.LastName, employee.Department.Name, employee.Age, employee.Email
+             ///, employee.PhoneNumber, employee.Address, employee.Salary, employee.IsActive, employee.HireDate, employee.Gender, employee.
+             ///  EmployeeType, employee.DepartmentId, employee.CreatedBy, employee.CreatedOn, employee.LastModifiedBy, employee.LastModifiedOn)),
+               
+                Data=employeeDtos,
                 PageIndex = queryParameters.PageIndex,
                 PageSize = queryParameters.PageSize,
                 TotalCount = queryParameters.TotalCount
@@ -94,20 +103,23 @@ namespace LinkDev.IKEA.BLL.Services.Employees
         public int CreateEmployee(EmployeeCreateDto employeeDto)
         {
             validateEmployeeCreateBussinessRules(employeeDto);
-            var employee = new Employee()
-            {
-                FirstName = employeeDto.FirstName,
-                LastName = employeeDto.LastName,
-                Age = DateTime.Now.Year - employeeDto.BirthOfDate.Year,
-                Address = employeeDto.Address,
-                DepartmentId = employeeDto.DepartmentId,
-                PhoneNumber = employeeDto.PhoneNumber, 
-                Gender = employeeDto.Gender,
-                EmployeeType = employeeDto.EmployeeType,
-                Salary = employeeDto.Salary,
-                CreatedBy="",
-                LastModifiedBy=""
-            };
+            /// var employee = new Employee()
+            /// {
+            ///     FirstName = employeeDto.FirstName,
+            ///     LastName = employeeDto.LastName,
+            ///     Age = DateTime.Now.Year - employeeDto.BirthOfDate.Year,
+            ///     Address = employeeDto.Address,
+            ///     DepartmentId = employeeDto.DepartmentId,
+            ///     PhoneNumber = employeeDto.PhoneNumber, 
+            ///     Gender = employeeDto.Gender,
+            ///     EmployeeType = employeeDto.EmployeeType,
+            ///     Salary = employeeDto.Salary,
+            ///     CreatedBy="",
+            ///     LastModifiedBy=""
+            /// };
+            /// 
+
+            var employee = _mapper.Map<Employee>(employeeDto);
             employee.HireDate = DateOnly.FromDateTime(DateTime.Now);
             employee.IsActive = true;
 
@@ -120,7 +132,9 @@ namespace LinkDev.IKEA.BLL.Services.Employees
         {
             var existingemp = _unitOfWork.Employees.Get(employeeDto.Id);
             if (existingemp is null) return -1;
+
             validateEmployeeUpdateBussinessRules(employeeDto, existingemp);
+          
             existingemp.FirstName = employeeDto.FirstName;
             existingemp.LastName = employeeDto.LastName;
              existingemp.Address = employeeDto.Address;

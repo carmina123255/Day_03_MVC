@@ -9,16 +9,30 @@ using System.Threading.Tasks;
 
 namespace LinkDev.IKEA.BLL.Models.Employee
 {
-   public  record EmployeeDto(int Id, string FirstName, 
-       string LastName,string? DepartmentName,int? Age, string? Email, string? phoneNumber,
-       string? Address, decimal Salary, bool IsActive,
-       DateOnly HireDate, Gender Gender, EmployeeType EmployeeType,
-       int? DepartmentId, string? CreatedBy, DateTime CreatedOn
-       , string? LastModifiedBy, DateTime LastModifiedOn)
-
+    public record EmployeeDto
     {
+        public int Id { get; init; }
+        public string FirstName { get; init; }
+        public string LastName { get; init; }
+        public string? DepartmentName { get; init; }
+        public int? Age { get; init; }
+        public string? Email { get; init; }
+        public string? PhoneNumber { get; init; }
+        public string? Address { get; init; }
+        public decimal Salary { get; init; }
+        public bool IsActive { get; init; }
+        public DateOnly HireDate { get; init; }
+        public Gender Gender { get; init; }
+        public EmployeeType EmployeeType { get; init; }
+        public int? DepartmentId { get; init; }
+        public string? CreatedBy { get; init; }
+        public DateTime CreatedOn { get; init; }
+        public string? LastModifiedBy { get; init; }
+        public DateTime LastModifiedOn { get; init; }
+   
+        
         public string FullName => $"{FirstName} {LastName}";
-        public string FromattedHireDate => HireDate.ToString("MMMM d,yyyy");
-
-    };
+        public string FormattedHireDate => HireDate.ToString("MMMM d, yyyy");
+    
+    }
 }
