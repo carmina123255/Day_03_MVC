@@ -77,7 +77,7 @@ namespace LinkDev.IKEA.BLL.Services.Employees
 
             var result = new PaginatedResult<EmployeeDto>()
             {
-                Data = employees.Data.Select(employee => new EmployeeDto(employee.Id, employee.FirstName,employee.Department.Name, employee.LastName, employee.Age, employee.Email
+                Data = employees.Data.Select(employee => new EmployeeDto(employee.Id, employee.FirstName, employee.LastName, employee.Department.Name, employee.Age, employee.Email
               , employee.PhoneNumber, employee.Address, employee.Salary, employee.IsActive, employee.HireDate, employee.Gender, employee.
                 EmployeeType, employee.DepartmentId, employee.CreatedBy, employee.CreatedOn, employee.LastModifiedBy, employee.LastModifiedOn)),
                 PageIndex = queryParameters.PageIndex,

@@ -23,6 +23,8 @@ namespace LinkDev.IKEA.DAL.Persistance.Common
             get => serachTerm;
             set { serachTerm = value.ToLower(); }
         }
+        public string? SortBy { get; set; }
+        public bool SortAsc { get; set; }
     }
 }
 

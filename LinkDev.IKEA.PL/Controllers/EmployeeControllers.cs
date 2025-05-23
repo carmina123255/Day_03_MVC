@@ -31,7 +31,9 @@ namespace LinkDev.IKEA.PL.Controllers
 
         #region Index 
         [HttpGet] //Get:/Employee/Index
-        public IActionResult Index(string SearchTerm="",int pageIndex = 1, int PageSize = 10)
+        public IActionResult Index(string SearchTerm="",
+            string SortBy="name",bool SortAsc=true,
+            int pageIndex = 1, int PageSize = 10)
         {
 
 
@@ -39,7 +41,9 @@ namespace LinkDev.IKEA.PL.Controllers
             {
                 PageSize = PageSize,
                 PageIndex = pageIndex,
-                Searchterm=SearchTerm
+                Searchterm=SearchTerm,
+                SortBy=SortBy,
+                SortAsc=SortAsc
                 
             };
             var employee = _employeeService.GetPaginatedEmployees(queryParameters);
@@ -67,6 +71,9 @@ namespace LinkDev.IKEA.PL.Controllers
                 Page = employee.PageIndex,
                 PageSize = employee.PageSize,
                 TotalCount = employee.TotalCount,
+                SortedBy=SortBy,
+                SortedAscending=SortAsc,
+                SearchTerm=SearchTerm
 
             };
 
