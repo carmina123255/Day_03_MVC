@@ -31,9 +31,9 @@ namespace LinkDev.IKEA.PL
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(5);
                     options.Lockout.MaxFailedAccessAttempts = 5;
 
-                    options.SignIn.RequireConfirmedAccount = true;
-                    options.SignIn.RequireConfirmedEmail = true;
-                    options.SignIn.RequireConfirmedPhoneNumber = true;
+                    ///options.SignIn.RequireConfirmedAccount = true;
+                    ///options.SignIn.RequireConfirmedEmail = true;
+                    ///options.SignIn.RequireConfirmedPhoneNumber = true;
                 }
                 ).AddEntityFrameworkStores<ApplicationDbContext>();
             
