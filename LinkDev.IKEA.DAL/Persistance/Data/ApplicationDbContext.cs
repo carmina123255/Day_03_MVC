@@ -13,19 +13,20 @@ using System.Threading.Tasks;
 
 namespace LinkDev.IKEA.DAL.Persistance.Data
 {
-    public class ApplicationDbContext:IdentityDbContext
+    public class ApplicationDbContext:IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
         {
         
         }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            optionsBuilder
-//                .UseSqlServer("Server =.;Database =IKEA;Trusted_Connection =True ; Encrypt =True;TrustServerCertificate =true");
-//        }
-//
+       ///        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       ///        {
+       ///            optionsBuilder
+       ///                .UseSqlServer("Server =.;Database =IKEA;Trusted_Connection =True ; Encrypt =True;TrustServerCertificate =true");
+       ///        }
+       ///
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             
         {
