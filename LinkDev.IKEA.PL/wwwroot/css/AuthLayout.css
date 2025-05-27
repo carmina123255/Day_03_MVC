@@ -109,12 +109,12 @@ img {
 
 /*-- end reset --*/
 body {
-    background: #76b852;
+    background: #ff9a9e;
     /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #76b852, #8DC26F);
-    background: -moz-linear-gradient(to top, #76b852, #8DC26F);
-    background: -o-linear-gradient(to top, #76b852, #8DC26F);
-    background: linear-gradient(to top, #76b852, #8DC26F);
+    background: -webkit-linear-gradient(to top, #ff9a9e, #fecfef);
+    background: -moz-linear-gradient(to top, #ff9a9e, #fecfef);
+    background: -o-linear-gradient(to top, #ff9a9e, #fecfef);
+    background: linear-gradient(to top, #ff9a9e, #fecfef);
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Roboto', sans-serif;
