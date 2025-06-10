@@ -7,12 +7,14 @@ using LinkDev.IKEA.DAL.Contracts.Repositories;
 using LinkDev.IKEA.DAL.Entities.Departments;
 using LinkDev.IKEA.DAL.Persistance.Common;
 using LinkDev.IKEA.PL.Models.Employee;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Microsoft.Extensions.Hosting;
 
 namespace LinkDev.IKEA.PL.Controllers
 {
+    [Authorize(Roles ="Admin,Manager")]
     public class EmployeeController:Controller
     {
         #region Services

@@ -36,7 +36,36 @@ namespace LinkDev.IKEA.PL
                     ///options.SignIn.RequireConfirmedPhoneNumber = true;
                 }
                 ).AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
+            //By Default Calling when use AddIdentity 
+
+            ///   services.AddAuthentication();
+            ///   services.AddAuthentication("Cookies").AddCookie();
+            ///   services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
+            ///   services.AddAuthentication(options =>
+            ///   {
+            ///       options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            ///       options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            ///       options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            ///   }).AddCookie();
+            ///
+            ///    /// .AddCookie(options =>
+            /// {
+            ///     options.LoginPath = "/Account/SignIn";
+            ///     options.AccessDeniedPath = "/Account/AccessDenied";
+            ///     options.LogoutPath = "/Account/Logout";
+            ///     options.ExpireTimeSpan = TimeSpan.FromDays(30);
+            ///     options.SlidingExpiration = true;
+            /// });   
+
+              services.ConfigureApplicationCookie(options =>
+              {
+                  options.LoginPath = "/Account/SignIn";
+                  options.AccessDeniedPath = "/Account/AsscessDenied";
+                  options.LogoutPath = "/Account/Logout";
+                  options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                  options.SlidingExpiration = true;
+              });
             return services;
         }
     }
