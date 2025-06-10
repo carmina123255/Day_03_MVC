@@ -3,6 +3,8 @@ using LinkDev.IKEA.DAL.Common.JsonConverter;
 using LinkDev.IKEA.DAL.Contacts;
 using LinkDev.IKEA.DAL.Entities.Departments;
 using LinkDev.IKEA.DAL.Entities.Employees;
+using LinkDev.IKEA.DAL.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -66,6 +68,35 @@ namespace LinkDev.IKEA.DAL.Persistance.Data.DbInitializer
                     _dbContext.Employees.AddRange(Employees);
                     _dbContext.SaveChanges();
                 }
+            }
+        }
+
+        public async Task SeedUserAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            if (! await roleManager.RoleExistsAsync("Admin"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+
+            if (!userManager.Users.Any())
+            {
+                var adminUser = new ApplicationUser()
+                {
+                    FirstName = "Admin",
+                    LastName = "User",
+                    UserName = "admin.user",
+                    Email="admin.user@gmail.com"
+
+                };
+                var result = await userManager.CreateAsync(adminUser
+                    , "P@ssw0rd");
+
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+
+                }
+
             }
         }
     }
