@@ -96,6 +96,19 @@ namespace LinkDev.IKEA.PL.Controllers
             return View(model);
         }
         #endregion
+
+
+        #region Sign out 
+
+        [HttpGet] //Get /Account/SignOut
+        public new async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        #endregion
     }
     }
 
