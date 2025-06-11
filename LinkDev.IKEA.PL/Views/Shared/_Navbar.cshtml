@@ -1,0 +1,75 @@
+﻿@using LinkDev.IKEA.DAL.Entities.Identity
+ @using Microsoft.AspNetCore.Identity
+ @inject SignInManager<ApplicationUser> SignInManager
+ @inject UserManager<ApplicationUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+	<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+		<ul class="navbar-nav flex-grow-1">
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-areat="" asp-controller="Home" asp-action="Privacy">Privcy</a>
+			</li>
+		</ul>
+
+		<ul class="navbar-nav flex-grow-1">
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Department" asp-action="Index">Departments</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Employees</a>
+			</li>
+
+		</ul>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link text-dark " asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+			</li>
+		</ul>
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<form class="form-inline" asp-area="Identity" asp-controller="Account" asp-action="SignOut" asp-route-returnurl="@Url.Action("Index","Home",new {area="" })">
+					<button type="submit" class="nav-link btn btn-link text-dark"> Sign Out </button>
+				</form>
+			</li>
+		</ul>
+	</div>
+
+}
+else
+{
+
+	<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+		<ul class="navbar-nav flex-grow-1">
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-area=" " asp-controller="Home" asp-action="Privacy">Privacy</a>
+			</li>
+		</ul>
+
+
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="SignUp">Register</a>
+
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link text-dark" asp-area="Identity" asp-controller="Account" asp-action="SignIn">Login</a>
+
+			</li>
+
+		</ul>
+	</div>
+
+
+
+
+}

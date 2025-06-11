@@ -36,6 +36,7 @@ namespace LinkDev.IKEA.PL
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseStaticFiles();
 
             // Authentication and Authorization must be after UseRouting() but before mapping routes
             app.UseAuthentication();
