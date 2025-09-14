@@ -1,0 +1,193 @@
+﻿@model EmployeeListViewModel
+@{
+    ViewData["Title"] = "Employee";
+}
+<div class="container-fluid">
+    <h1>Employees</h1>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <a asp-action="Create" class="btn btn-primary">Create New</a>
+        </div>
+        <div class="col-md-6">
+            <form asp-action="Index" method="get" class="form-inline float-right">
+                <div class="input-group">
+                    <input type="text" name="searchTerm" value="@Model.SearchTerm" class="form-control" placeholder="Search employees...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <!-- Debug Info - Remove this after testing -->
+            <div style="background: #f0f0f0; padding: 10px; margin: 10px 0; font-family: monospace;">
+                Current Sort: @Model.SortedBy | Ascending: @Model.SortedAscending | Page: @Model.Page
+            </div>
+
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        <a asp-action="Index" asp-route-sortBy="@Model.SortedBy" asp-route-sortAscending="@(Model.SortedAscending)" asp-route-page="@Model.Page" asp-route-pageSize="@Model.PageSize" asp-route-searchTerm="@Model.SearchTerm">
+                            Full Name
+                            @if (Model.SortedBy == "name")
+                            {
+                                <i class="fas fa-sort-@(Model.SortedAscending ? "up" : "down")"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortBy="@Model.SortedBy" asp-route-sortAscending="@(Model.SortedAscending)" asp-route-page="@Model.Page" asp-route-pageSize="@Model.PageSize" asp-route-searchTerm="@Model.SearchTerm">
+                            Email
+                            @if (Model.SortedBy == "email")
+                            {
+                                <i class="fas fa-sort-@(Model.SortedAscending ? "up" : "down")"></i>
+                            }
+                        </a>
+                    </th>
+                    <th>
+                        <a asp-action="Index" asp-route-sortBy="@Model.SortedBy" asp-route-sortAscending="@Model.SortedAscending" asp-route-page="@Model.Page" asp-route-pageSize="@Model.PageSize" asp-route-searchTerm="@Model.SearchTerm">
+                            Department
+                            @if (string.Equals(Model.SortedBy, "department", StringComparison.OrdinalIgnoreCase))
+                            {
+                                <i class="fas fa-sort-@(Model.SortedAscending ? "up" : "down")"></i>
+                            }
+                        </a>
+                    </th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">De/Activated</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Employees)
+                {
+                    <tr>
+                        <td>@item.FullName</td>
+                        <td>@item.Email</td>
+                        <td>@item.Department</td>
+                        <td class="text-center">
+                            @if (item.IsActive)
+                            {
+                                <span class="btn btn-outline-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="btn btn-outline-secondary">Inactive</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            <form asp-action="ToggleStatus" asp-route-id="@item.Id" method="Post" style="display:inline">
+                                <input type="hidden" name="IsActive" value="@((!item.IsActive).ToString().ToLower())" />
+                                <button type="submit" class="btn btn-@(item.IsActive?"secondary":"success") btn-sm">
+                                    @(item.IsActive ? "Deactivate" : "Activate")
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                    <i class="fas fa-info-circle"></i> Details
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <button class="btn btn-danger btn-sm delete-btn" data-id="@item.Id" data-name="@item.FullName">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    @{
+        var prevDisabled = Model.Page == 1 ? "disabled" : ""; var nextDisabled = Model.Page * Model.PageSize >= Model.TotalCount ? "disabled" : ""; var totalPages = (int)Math.Ceiling(Model.TotalCount / (double)Model.PageSize);
+    }
+
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            Showing @(((Model.Page - 1) * Model.PageSize) + 1) to @Math.Min(Model.Page * Model.PageSize, Model.TotalCount) of @Model.TotalCount employees
+        </div>
+
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <li class="page-item @prevDisabled">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page - 1)" asp-route-pageSize="@Model.PageSize" asp-route-sortBy="@Model.SortedBy" asp-route-sortAscending="@Model.SortedAscending" asp-route-searchTerm="@Model.SearchTerm">
+                        Previous
+                    </a>
+                </li>
+
+                @for (int i = Math.Max(1, Model.Page - 2); i
+                <= Math.Min(totalPages, Model.Page + 2); i++)
+                {
+                    <li class="page-item @(i == Model.Page ? " active " : " ")">
+                        <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-pageSize="@Model.PageSize" asp-route-sortBy="@Model.SortedBy" asp-route-sortAscending="@Model.SortedAscending" asp-route-searchTerm="@Model.SearchTerm">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                <li class="page-item @nextDisabled">
+                    <a class="page-link" asp-action="Index" asp-route-page="@(Model.Page + 1)" asp-route-pageSize="@Model.PageSize" asp-route-sortBy="@Model.SortedBy" asp-route-sortAscending="@Model.SortedAscending" asp-route-searchTerm="@Model.SearchTerm">
+                        Next
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+@if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+{
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">IKEA</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                @TempData["ErrorMessage"]
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            // Delegated event handler for delete buttons
+            $(document).on('click', '.delete-btn', function() { 
+                var id = $(this).data('id');
+                var name = $(this).data('name');
+
+                // Generate the confirmation dialog dynamically
+                Swal.fire({
+                    title: 'Confirm Delete',
+                    html: 'Are you sure you want to delete <strong>' + name + '</strong>?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Delete',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var form = $('<form></form>').attr({
+                            method: "post",  // Fixed syntax (was method="post")
+                            action: '/Employee/Delete/' + id  // Added missing slash
+                        });
+                        form.appendTo('body').submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

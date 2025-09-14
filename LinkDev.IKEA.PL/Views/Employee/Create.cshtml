@@ -1,0 +1,121 @@
+﻿@model EmployeeCreateViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+<h1 >Create Employee</h1>
+
+<div class="container align-content-center">
+    <form asp-action="Create" asp-controller="Employee">
+        <div class="row">
+            <!-- Employee Information Section -->
+            <div class="col-md-6">
+                <h2 class="btn btin-primary">Employee Information</h2>
+
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="DateOfBirth"></label>
+                    <input asp-for="DateOfBirth" type="date" class="form-control" />
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="DepartmentId"></label>
+                    <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.Departments">
+                        <option value="">-- Select Department --</option>
+                        @foreach (var department in Model.Departments)
+                        {
+                            <option value="@department.Value">@department.Text</option>
+                        }
+                    </select>
+                    <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="Salary"></label>
+                    <input asp-for="Salary" class="form-control" value="0.00" />
+                    <span asp-validation-for="Salary" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <!-- Additional Information Section -->
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="Address"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="Gender"></label>
+                    <select asp-for="Gender" class="form-control" >
+                        <option value="">-- Select Gender --</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+
+                    </select>
+                    <span asp-validation-for="Gender" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label class="form-label" asp-for="EmployeeType"></label>
+                    <select asp-for="EmployeeType" class="form-control" >
+                        <option value="">-- Select Employee Type --</option>
+                        <option value="FullTime">Full Time</option>
+                        <option value="PartTime">Part Time</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Intern">Intern</option>
+                    </select>
+                    <span asp-validation-for="EmployeeType" class="text-danger"></span>
+                </div>
+                
+            </div>
+        </div>
+        
+        <hr />
+        
+        <div class="alert alert-info">
+            <h4>Information</h4>
+            <p>Please fill in all required fields to create a new employee.</p>
+            <ul>
+                <li>The employee will be automatically set as Active.</li>
+                <li>The hire date will be set to today's date.</li>
+                <li>Make sure to select the appropriate department.</li>
+            </ul>
+        </div>
+        
+        <div class="mb-3">
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-light">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
